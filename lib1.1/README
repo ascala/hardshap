@@ -1,0 +1,40 @@
+These project regard libraries for the simulation of hard shaped bodies. At the 
+moment, it contains some libraries for detecting overlaps in 2d
+
+LIBS:
+apart openinventor and plplot (plplot9-driver-xwin on Ubuntu), check that freeglut3-dev is installed
+
+TODO:
+	The project needs to be configured with AUTOTOOLS in order to be able to be installed. 
+	At the moment, it assumes that GSL (gnu scientific libraries) and PLPLOT libraries 
+	are installed
+
+
+DIRECTORIES:
+
+* include
+	all the headers
+	vector2d.h: Basic template library for vectors in 2d and 3d. Integer vectors 
+	are useful fo the construction of periodic cells. 
+	LLcells2d.h: template library for linked list cells
+	
+* lib
+	libSE2d.a: basic libraries for detecting overlaps among shaped 2d objects:
+	- circles: OV,DS
+	- lines: OV,DS
+	- spherical caps: OV,DS
+	- oriented rectangles : OV
+	- ellipses: OV
+	- super-ellipses: OV
+	(OV means the presence of routines for the overlap, DS for the distance)
+	libWrapPlplot.a: wrapper for the plplot 2d graphic libraries libraries 
+	(http://plplot.sourceforge.net/), useful to visualise and debug the code
+
+
+* src
+	some test that the code is functioning
+	this is the core of a Monte Carlo simulation of 2d shaped particles
+	
+* NOTES
+	some preliminary technical notes (text in lyx, figures in xfig) 
+	

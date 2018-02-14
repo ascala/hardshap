@@ -1,0 +1,167 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{float}
+\usepackage{amsbsy}
+
+\makeatletter
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% LyX specific LaTeX commands.
+\floatstyle{ruled}
+\newfloat{algorithm}{tbp}{loa}
+\providecommand{\algorithmname}{Algorithm}
+\floatname{algorithm}{\protect\algorithmname}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Textclass specific LaTeX commands.
+\newenvironment{lyxcode}
+{\par\begin{list}{}{
+\setlength{\rightmargin}{\leftmargin}
+\setlength{\listparindent}{0pt}% needed for AMS classes
+\raggedright
+\setlength{\itemsep}{0pt}
+\setlength{\parsep}{0pt}
+\normalfont\ttfamily}%
+ \item[]}
+{\end{list}}
+
+\makeatother
+
+\usepackage{babel}
+\begin{document}
+
+\section{Distance between lines, segments and spherical caps}
+
+\subsection{Distance between lines}
+
+First, consider lines
+
+\[
+\begin{array}{ccc}
+P(s) & = & P_{0}+s\,\mathbf{u}\\
+Q(t) & = & Q_{o}+t\,\mathbf{v}
+\end{array}
+\]
+
+a segment between the two lines is
+
+\[
+\mathbf{w}(s,t)=P(s)-Q(t)
+\]
+
+the minimum distance segment $\mathbf{w}^{c}=\mathbf{w}(s_{c},t_{c})$
+is $\bot$ to the lines:
+
+\[
+\begin{array}{ccc}
+\mathbf{w}^{c}\cdot\mathbf{u} & = & 0\\
+-\mathbf{w}^{c}\cdot\boldsymbol{v} & = & 0
+\end{array}
+\]
+
+i.e. (indicating with $a=\mathbf{u}\cdot\mathbf{u}$, $b=\mathbf{u}\cdot\mathbf{v}$,
+$c=\mathbf{v}\cdot\mathbf{v}$, $\mathbf{w}^{0}=\mathbf{w}(0,0)=P_{0}-Q_{0}$,
+$d=\mathbf{u}\cdot\mathbf{w}^{0}$, $e=\mathbf{v}\cdot\mathbf{w}^{0}$
+and $\Delta=ac-b^{2}$)
+
+\[
+\begin{array}{ccc}
+d+s_{c}\,a-t_{c\,}b & = & 0\\
+-e-s_{c}\,b+t_{c\,}c & = & 0
+\end{array}
+\]
+
+that is
+
+\[
+\begin{array}{ccc}
+s_{c} & = & (be-cd)/\Delta\\
+t_{c} & = & (ae-bd)/\Delta
+\end{array}
+\]
+
+Note that $\Delta=\mathbf{u}^{2}\mathbf{v}^{2}-\left|\mathbf{u}\right|\left|\mathbf{v}\right|\cos^{2}\theta=(\left|\mathbf{u}\right|\left|\mathbf{v}\right|\sin\theta)^{2}\geq0$
+and $\Delta=0$ only when $\mathbf{u}\parallel\mathbf{v}$ . In the
+$\Delta=0$ case, we can use $s_{c}=0$ so that $t_{c}=e/c$.
+
+\section{Distance between segments}
+
+We describe finite segments limiting $-1\leq s\leq1$; this way $P(s)$
+describes a segment centered in $P_{0}$, of direction $\mathbf{u}$
+and length $2\left|\mathbf{u}\right|$. 
+
+\begin{algorithm}
+\caption{Distance between two segments.}
+\begin{lyxcode}
+Vector~QP~=~P-Q;
+
+double~a~=~u{*}u;~//~always~>~0
+
+double~b~=~u{*}v;
+
+double~c~=~v{*}v;~//~always~>~0
+
+double~d~=~u{*}QP;
+
+double~e~=~v{*}QP;
+
+double~eps~=~1.0e-6;
+
+double~D~=~a{*}c~-~b{*}b;~~~~~//~always~>=~0
+
+if~(D~<~eps)~\{~//~segment~almost~parallel
+
+~~~//~decide~wich~edge~of~P(s)~is~nearest
+
+~~~if(~d<0~)~sc~=~-1.0;~~
+
+~~~else~sc~=~1.0;
+
+~~~//~minimize~distance~to~Q(t)
+
+~~~tc~=~(e+sc{*}b)/c;
+
+\}
+
+else\{~//~closest~points~on~the~lines
+
+~~~~~sc~=~(b{*}e-c{*}d)~/~D;
+
+~~~~~//~check~sc~is~on~P(s)~and
+
+~~~~~//~minimize~distance
+
+~~~~~if(sc<-1.0~)~
+
+~~~~~~~\{~sc~=~-1.0;~tc~=~(e+sc{*}b)/c;\}~
+
+~~~~~else~if(~sc>1.0~)~
+
+~~~~~~~\{~sc~=~1.0;~tc~=~(e+sc{*}b)/c;\}
+
+~~~~~else~tc~=~(a{*}e-b{*}d)~/~D;
+
+~~~~\}
+
+~~~~~~~~
+
+//~check~tc~is~on~Q(t)~and
+
+//~minimize~distance~
+
+if(tc<-1.0)~\{~tc=-1.0;~sc=(tc{*}b-d)/a;
+
+else~if(tc>1.0)~\{~tc=1.0;~sc=(tc{*}b-d)/a;\}
+
+//~last~check~sc~is~on~P(s)
+
+if(sc<-1.0)~sc=-1.0;~else~if(sc>1.0)~sc=1.0;~
+
+\end{lyxcode}
+\end{algorithm}
+
+\subsection{Distance between spherical caps}
+
+xxx
+\end{document}

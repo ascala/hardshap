@@ -1,0 +1,153 @@
+%% LyX 2.2.3 created this file.  For more info, see http://www.lyx.org/.
+%% Do not edit unless you really know what you are doing.
+\documentclass[english]{article}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage{babel}
+\begin{document}
+
+\title{Ellipses}
+\maketitle
+
+\section{Class Ellipse}
+\begin{itemize}
+\item $r$ center of mass
+\item $u[0]$,$u[1]$ are the $x$,$y$ axis
+\item $a_{x}$,$a_{y}$ are the axis lengths
+\end{itemize}
+
+\subsection{Useful Functions}
+
+The surface is described by 
+
+\[
+f\left(P\right)=\left[\frac{\left(P-r\right)\cdot u[0]}{a_{x}}\right]^{2}+\left[\frac{\left(P-r\right)\cdot u[1]}{a_{y}}\right]^{2}-1=0
+\]
+
+can described implicitly in terms of a single parameter (angle) $\alpha$:
+
+\[
+P\left(\alpha\right)=a_{x}\,\cos\alpha\,u[0]+a_{y}\sin\alpha\,u[1]+r
+\]
+
+\[
+\partial_{\alpha}P\left(\alpha\right)=-a_{x}\,\sin\alpha\,u[0]+a_{y}\cos\alpha\,u[1]
+\]
+
+The gradient $\nabla f\left(P\right)$ is 
+
+\[
+\nabla f\left(P\right)=2\frac{\left(P-r\right)\cdot u[0]}{a_{x}^{2}}\,u[0]+2\frac{\left(P-r\right)\cdot u[1]}{a_{y}^{2}}\,u[1]
+\]
+
+In the case $P\left(\alpha\right)$, we have $\left(P-r\right)\cdot u[0]=a_{x}\,\cos\alpha$
+
+\[
+\nabla f\left(P\left(\alpha\right)\right)=2\cos\alpha\,u[0]/a_{x}+2\sin\alpha\,u[1]/a_{y}
+\]
+
+that can be used to check that $\partial_{\alpha}f\left(P\left(\alpha\right)\right)=0$
+
+\[
+\partial_{\alpha}f\left(P\left(\alpha\right)\right)=\nabla f\cdot\partial_{\alpha}P=0
+\]
+
+and to calculate $\partial_{\alpha}\nabla f\left(P\left(\alpha\right)\right)$
+
+\[
+\partial_{\alpha}\nabla f\left(P\left(\alpha\right)\right)=-2\sin\alpha\,u[0]/a_{x}+2\cos\alpha\,u[1]/a_{y}
+\]
+
+\section{Distance}
+
+We will look for the distance between two ellipses using Newton-Raphson.
+Given two ellipses $E_{i}\,(i=A,B)$, we will individuate two points
+$P_{i}$ on the surfaces of $E_{i}$ (i.e. corresponding to two angles
+$\theta_{i}$) such that
+
+\[
+\left\{ \begin{array}{ccc}
+\nabla_{A}f_{A}\wedge\nabla_{B}f_{B} & = & 0\\
+P_{B} & = & P_{A}+\alpha\nabla_{A}f_{A}
+\end{array}\right.
+\]
+
+i.e. we look for the $0$'s of $3$ equations (as $P_{i}=\left(x_{i},y_{i}\right)$)
+:
+
+\[
+F=\left(\begin{array}{c}
+\nabla_{A}f_{A}\wedge\nabla_{B}f_{B}\\
+x_{A}-x_{B}+\alpha\left.\nabla_{A}f_{A}\right|_{x}\\
+y_{A}-y_{B}+\alpha\left.\nabla_{A}f_{A}\right|_{y}
+\end{array}\right)=0
+\]
+
+with Hessian
+
+\[
+H=\left\Vert \begin{array}{ccc}
+\left(\partial_{\theta_{A}}\nabla_{A}f_{A}\right)\wedge\nabla_{B}f_{B} & \nabla_{A}f_{A}\wedge\left(\partial_{\theta_{B}}\nabla_{B}f_{B}\right) & 0\\
+\partial_{\theta_{A}}x_{A}+\alpha\left(\partial_{\theta_{A}}\nabla_{A}f_{A}\right)_{x} & -\partial_{\theta_{B}}x_{B} & \left.\nabla_{A}f_{A}\right|_{x}\\
+\partial_{\theta_{A}}y_{A}+\alpha\left(\partial_{\theta_{A}}\nabla_{A}f_{A}\right)_{y} & -\partial_{\theta_{B}}y_{b} & \left.\nabla_{A}f_{A}\right|_{y}
+\end{array}\right\Vert 
+\]
+
+Therefore, we have all the routines for the Hessian 
+
+\section{Class Ellipse}
+\begin{itemize}
+\item $r$ center of mass
+\item $u[0]$,$u[1]$ are the $x$,$y$ axis
+\item $a_{x}$,$a_{y}$ are the axis lengths
+\item $e_{x}$,$e_{y}$ are the $x$,$y$ exponents 
+\end{itemize}
+
+\subsection{Useful Functions}
+
+The surface is described by 
+
+\[
+f\left(P\right)=\left[\frac{\left(P-r\right)\cdot u[0]}{a_{x}}\right]^{e_{x}}+\left[\frac{\left(P-r\right)\cdot u[1]}{a_{y}}\right]^{e_{y}}-1=0
+\]
+
+(where for $a^{e}$ we really mean $sgn\left(a\right)\left|a\right|^{e}$)
+and can described implicitly in terms of a single parameter (angle)
+$\alpha$:
+
+\[
+P\left(\alpha\right)=a_{x}s_{x}\left|\cos\alpha\right|^{2/e_{x}}\,u[0]+a_{y}s_{y}\left|\sin\theta\right|^{2/e_{y}}\,u[1]+r
+\]
+
+\[
+\partial_{\alpha}P\left(\alpha\right)=-\left(2a_{x}/e_{x}\right)s_{x}\left|\sin\alpha\right|\,\left|\cos\alpha\right|^{\left(2-e_{x}\right)/e_{x}}\,u[0]+\left(2a_{y}/e_{y}\right)s_{y}\left|\cos\alpha\right|\,\left(\sin\alpha\right)^{\left(2-e_{x}\right)/e_{y}}\,u[1]
+\]
+
+where $s_{x}=sgn\left(\cos\alpha\right)$, $s_{y}=sgn\left(\sin\alpha\right)$
+
+The gradient $\nabla f\left(P\right)$ is 
+
+\[
+\nabla f\left(P\right)=2\frac{\left(P-r\right)\cdot u[0]}{a_{x}^{2}}\,u[0]+2\frac{\left(P-r\right)\cdot u[1]}{a_{y}^{2}}\,u[1]
+\]
+
+In the case $P\left(\alpha\right)$, we have $\left(P-r\right)\cdot u[0]=a_{x}\,\cos\alpha$
+
+\[
+\nabla f\left(P\left(\alpha\right)\right)=2\cos\alpha\,u[0]/a_{x}+2\sin\alpha\,u[1]/a_{y}
+\]
+
+that can be used to check that $\partial_{\alpha}f\left(P\left(\alpha\right)\right)=0$
+
+\[
+\partial_{\alpha}f\left(P\left(\alpha\right)\right)=\nabla f\cdot\partial_{\alpha}P=0
+\]
+
+and to calculate $\partial_{\alpha}\nabla f\left(P\left(\alpha\right)\right)$
+
+\[
+\partial_{\alpha}\nabla f\left(P\left(\alpha\right)\right)=-2\sin\alpha\,u[0]/a_{x}+2\cos\alpha\,u[1]/a_{y}
+\]
+
+
+\end{document}

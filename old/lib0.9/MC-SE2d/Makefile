@@ -1,0 +1,43 @@
+#LIBDIR=/home/scala/lib
+LIBDIR=..
+
+INC =  -I./ -I$(LIBDIR)/VecNd/ -I$(LIBDIR)/SE2d/ -I$(LIBDIR)/LLcells/ -I$(LIBDIR)/Wrap_plplot
+LNK =  -L$(LIBDIR)/VecNd/ -L$(LIBDIR)/SE2d/ -L$(LIBDIR)/LLcells/ -L$(LIBDIR)/Wrap_plplot
+PLPLOT = `pkg-config --cflags --libs plplotd-c++`
+LIBS = $(LNK)  -lSE2d -lVec2d 
+
+Lib2d = $(PLPLOT) -lwrap_pl
+Lib3d = -lInventor -lInventorXt
+
+OPT = -O0 -g -D_RSEED=1234
+
+CC = gcc $(OPT) $(INC) 
+CPP = g++ $(OPT) $(INC)
+
+PROVAFILES = SimPar.o SimBox2d.o MCstep2d.o 
+
+all: EllipseMCwithPlPlot EllipsesMCwithInventor	
+
+EllipsesMCwithInventor: $(PROVAFILES)
+	$(CPP) $@.cpp $(PROVAFILES) $(LIBS) $(Lib3d) -U_LL_MC -o $@.x	
+
+EllipsesShow:
+	$(CPP) $@.cpp $(LIBS) $(Lib3d) -o $@.x
+
+EllipsesEventCB:
+	$(CPP) $@.cpp $(LIBS) $(Lib3d) -o $@.x             
+
+EllipseMCwithPlPlot: $(PROVAFILES)
+	$(CPP) $@.cpp $(PROVAFILES) $(LIBS) $(Lib2d) -U_LL_MC -o $@.x  
+	
+SimPar.o: SimPar.h SimPar.cpp
+	$(CPP) -c $*.cpp
+	
+SimBox2d.o: SimBox2d.h SimBox2d.cpp 
+	$(CPP) -c $*.cpp
+	
+MCstep2d.o: MCstep2d.h MCstep2d.cpp 
+	$(CPP) -c $*.cpp
+	
+clean:
+	rm -f *.x *.o *~

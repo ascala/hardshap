@@ -1,0 +1,477 @@
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass article
+\language english
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Title
+Ellipses
+\end_layout
+
+\begin_layout Section
+Class Ellipse
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $r$
+\end_inset
+
+ center of mass
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $u[0]$
+\end_inset
+
+,
+\begin_inset Formula $u[1]$
+\end_inset
+
+ are the 
+\begin_inset Formula $x$
+\end_inset
+
+,
+\begin_inset Formula $y$
+\end_inset
+
+ axis
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a_{x}$
+\end_inset
+
+,
+\begin_inset Formula $a_{y}$
+\end_inset
+
+ are the axis lengths
+\end_layout
+
+\begin_layout Subsection
+Useful Functions
+\end_layout
+
+\begin_layout Standard
+The surface is described by 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+f\left(P\right)=\left[\frac{\left(P-r\right)\cdot u[0]}{a_{x}}\right]^{2}+\left[\frac{\left(P-r\right)\cdot u[1]}{a_{y}}\right]^{2}-1=0\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+can described implicitly in terms of a single parameter (angle) 
+\begin_inset Formula $\alpha$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+P\left(\alpha\right)=a_{x}\,\cos\alpha\, u[0]+a_{y}\sin\alpha\, u[1]+r\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\partial_{\alpha}P\left(\alpha\right)=-a_{x}\,\sin\alpha\, u[0]+a_{y}\cos\alpha\, u[1]\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The gradient 
+\begin_inset Formula $\nabla f\left(P\right)$
+\end_inset
+
+ is 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\nabla f\left(P\right)=2\frac{\left(P-r\right)\cdot u[0]}{a_{x}^{2}}\, u[0]+2\frac{\left(P-r\right)\cdot u[1]}{a_{y}^{2}}\, u[1]\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the case 
+\begin_inset Formula $P\left(\alpha\right)$
+\end_inset
+
+, we have 
+\begin_inset Formula $\left(P-r\right)\cdot u[0]=a_{x}\,\cos\alpha$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\nabla f\left(P\left(\alpha\right)\right)=2\cos\alpha\, u[0]/a_{x}+2\sin\alpha\, u[1]/a_{y}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+that can be used to check that 
+\begin_inset Formula $\partial_{\alpha}f\left(P\left(\alpha\right)\right)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\partial_{\alpha}f\left(P\left(\alpha\right)\right)=\nabla f\cdot\partial_{\alpha}P=0\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and to calculate 
+\begin_inset Formula $\partial_{\alpha}\nabla f\left(P\left(\alpha\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\partial_{\alpha}\nabla f\left(P\left(\alpha\right)\right)=-2\sin\alpha\, u[0]/a_{x}+2\cos\alpha\, u[1]/a_{y}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Section
+Distance
+\end_layout
+
+\begin_layout Standard
+We will look for the distance between two ellipses using Newton-Raphson.
+ Given two ellipses 
+\begin_inset Formula $E_{i}\,(i=A,B)$
+\end_inset
+
+, we will individuate two points 
+\begin_inset Formula $P_{i}$
+\end_inset
+
+ on the surfaces of 
+\begin_inset Formula $E_{i}$
+\end_inset
+
+ (i.e.
+ corresponding to two angles 
+\begin_inset Formula $\theta_{i}$
+\end_inset
+
+) such that
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\left\{ \begin{array}{ccc}
+\nabla_{A}f_{A}\wedge\nabla_{B}f_{B} & = & 0\\
+P_{B} & = & P_{A}+\alpha\nabla_{A}f_{A}\end{array}\right.\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+i.e.
+ we look for the 
+\begin_inset Formula $0$
+\end_inset
+
+'s of 
+\begin_inset Formula $3$
+\end_inset
+
+ equations (as 
+\begin_inset Formula $P_{i}=\left(x_{i},y_{i}\right)$
+\end_inset
+
+) :
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+F=\left(\begin{array}{c}
+\nabla_{A}f_{A}\wedge\nabla_{B}f_{B}\\
+x_{A}-x_{B}+\alpha\left.\nabla_{A}f_{A}\right|_{x}\\
+y_{A}-y_{B}+\alpha\left.\nabla_{A}f_{A}\right|_{y}\end{array}\right)=0\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+with Hessian
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+H=\left\Vert \begin{array}{ccc}
+\left(\partial_{\theta_{A}}\nabla_{A}f_{A}\right)\wedge\nabla_{B}f_{B} & \nabla_{A}f_{A}\wedge\left(\partial_{\theta_{B}}\nabla_{B}f_{B}\right) & 0\\
+\partial_{\theta_{A}}x_{A}+\alpha\left(\partial_{\theta_{A}}\nabla_{A}f_{A}\right)_{x} & -\partial_{\theta_{B}}x_{B} & \left.\nabla_{A}f_{A}\right|_{x}\\
+\partial_{\theta_{A}}y_{A}+\alpha\left(\partial_{\theta_{A}}\nabla_{A}f_{A}\right)_{y} & -\partial_{\theta_{B}}y_{b} & \left.\nabla_{A}f_{A}\right|_{y}\end{array}\right\Vert \]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Therefore, we have all the routines for the Hessian 
+\end_layout
+
+\begin_layout Section
+Class Ellipse
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $r$
+\end_inset
+
+ center of mass
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $u[0]$
+\end_inset
+
+,
+\begin_inset Formula $u[1]$
+\end_inset
+
+ are the 
+\begin_inset Formula $x$
+\end_inset
+
+,
+\begin_inset Formula $y$
+\end_inset
+
+ axis
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $a_{x}$
+\end_inset
+
+,
+\begin_inset Formula $a_{y}$
+\end_inset
+
+ are the axis lengths
+\end_layout
+
+\begin_layout Itemize
+\begin_inset Formula $e_{x}$
+\end_inset
+
+,
+\begin_inset Formula $e_{y}$
+\end_inset
+
+ are the 
+\begin_inset Formula $x$
+\end_inset
+
+,
+\begin_inset Formula $y$
+\end_inset
+
+ exponents 
+\end_layout
+
+\begin_layout Subsection
+Useful Functions
+\end_layout
+
+\begin_layout Standard
+The surface is described by 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+f\left(P\right)=\left[\frac{\left(P-r\right)\cdot u[0]}{a_{x}}\right]^{e_{x}}+\left[\frac{\left(P-r\right)\cdot u[1]}{a_{y}}\right]^{e_{y}}-1=0\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+(where for 
+\begin_inset Formula $a^{e}$
+\end_inset
+
+ we really mean 
+\begin_inset Formula $sgn\left(a\right)\left|a\right|^{e}$
+\end_inset
+
+) and can described implicitly in terms of a single parameter (angle) 
+\begin_inset Formula $\alpha$
+\end_inset
+
+:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+P\left(\alpha\right)=a_{x}s_{x}\left|\cos\alpha\right|^{2/e_{x}}\, u[0]+a_{y}s_{y}\left|\sin\theta\right|^{2/e_{y}}\, u[1]+r\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\partial_{\alpha}P\left(\alpha\right)=-\left(2a_{x}/e_{x}\right)s_{x}\left|\sin\alpha\right|\,\left|\cos\alpha\right|^{\left(2-e_{x}\right)/e_{x}}\, u[0]+\left(2a_{y}/e_{y}\right)s_{y}\left|\cos\alpha\right|\,\left(\sin\alpha\right)^{\left(2-e_{x}\right)/e_{y}}\, u[1]\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+where 
+\begin_inset Formula $s_{x}=sgn\left(\cos\alpha\right)$
+\end_inset
+
+, 
+\begin_inset Formula $s_{y}=sgn\left(\sin\alpha\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+The gradient 
+\begin_inset Formula $\nabla f\left(P\right)$
+\end_inset
+
+ is 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\nabla f\left(P\right)=2\frac{\left(P-r\right)\cdot u[0]}{a_{x}^{2}}\, u[0]+2\frac{\left(P-r\right)\cdot u[1]}{a_{y}^{2}}\, u[1]\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+In the case 
+\begin_inset Formula $P\left(\alpha\right)$
+\end_inset
+
+, we have 
+\begin_inset Formula $\left(P-r\right)\cdot u[0]=a_{x}\,\cos\alpha$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\nabla f\left(P\left(\alpha\right)\right)=2\cos\alpha\, u[0]/a_{x}+2\sin\alpha\, u[1]/a_{y}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+that can be used to check that 
+\begin_inset Formula $\partial_{\alpha}f\left(P\left(\alpha\right)\right)=0$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\partial_{\alpha}f\left(P\left(\alpha\right)\right)=\nabla f\cdot\partial_{\alpha}P=0\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+and to calculate 
+\begin_inset Formula $\partial_{\alpha}\nabla f\left(P\left(\alpha\right)\right)$
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\partial_{\alpha}\nabla f\left(P\left(\alpha\right)\right)=-2\sin\alpha\, u[0]/a_{x}+2\cos\alpha\, u[1]/a_{y}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+
+\end_layout
+
+\end_body
+\end_document

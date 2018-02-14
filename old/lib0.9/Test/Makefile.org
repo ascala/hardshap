@@ -1,0 +1,44 @@
+#LIBDIR=/home/scala/lib
+LIBDIR=..
+
+INC =  -I$(LIBDIR)/VecNd/ -I$(LIBDIR)/SE2d/ -I$(LIBDIR)/LLcells/ -I$(LIBDIR)/Wrap_plplot
+LNK =  -L$(LIBDIR)/VecNd/ -L$(LIBDIR)/SE2d/ -L$(LIBDIR)/LLcells/ -L$(LIBDIR)/Wrap_plplot
+PLPLOT = `pkg-config --cflags --libs plplotd-c++`
+LIBS = $(LNK)  -lwrap_pl -lSE2d -lVec2d $(PLPLOT)
+
+#OPT = -O0 -g -D_RSEED=1234
+OPT = -O3
+
+CC = gcc $(OPT) $(INC) 
+CPP = g++ $(OPT) $(INC)
+
+#all: test_rectangle
+all: test_scap test_segment test_overlap test_vec2d test_se2d test_wrap_pl test_llcells
+
+test_segment: test_segment.cpp
+	$(CPP) $(LNK) test_segment.cpp -o test_segment.x $(PL) $(LIBS) 
+
+test_rectangle: test_rectangle.cpp
+	$(CPP) $(LNK) $@.cpp -o $@.x $(PL) $(LIBS) 
+
+test_scap: test_scap.cpp
+	$(CPP) $(LNK) $@.cpp -o $@.x $(PL) $(LIBS) 
+
+test_vec2d: test_vec2d.cpp
+	$(CPP) $(LNK) $@.cpp -o $@.x $(PL) $(LIBS) 
+
+test_se2d: test_se2d.cpp
+	$(CPP) $(LNK) $@.cpp -o $@.x $(PL) $(LIBS) 
+	
+test_wrap_pl: test_wrap_pl.cpp
+	$(CPP) $(LNK) $@.cpp -o $@.x $(PL) $(LIBS) 
+
+test_overlap: test_overlap.cpp
+	$(CPP) $(LNK) $@.cpp -o $@.x $(PL) $(LIBS) 
+
+test_llcells: test_llcells.cpp
+	$(CPP) $(LNK) $@.cpp -o $@.x $(PL) $(LIBS) 
+	
+clean: 
+	rm *.o *.do *~ *.x *.db 
+

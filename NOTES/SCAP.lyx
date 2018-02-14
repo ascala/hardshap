@@ -1,0 +1,383 @@
+#LyX 1.4.3 created this file. For more info see http://www.lyx.org/
+\lyxformat 245
+\begin_document
+\begin_header
+\textclass article
+\language english
+\inputencoding auto
+\fontscheme default
+\graphics default
+\paperfontsize default
+\papersize default
+\use_geometry false
+\use_amsmath 1
+\cite_engine basic
+\use_bibtopic false
+\paperorientation portrait
+\secnumdepth 3
+\tocdepth 3
+\paragraph_separation indent
+\defskip medskip
+\quotes_language english
+\papercolumns 1
+\papersides 1
+\paperpagestyle default
+\tracking_changes false
+\output_changes false
+\end_header
+
+\begin_body
+
+\begin_layout Section
+Distance between lines, segments and spherical caps
+\end_layout
+
+\begin_layout Subsection
+Distance between lines
+\end_layout
+
+\begin_layout Standard
+First, consider lines
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\begin{array}{ccc}
+P(s) & = & P_{0}+s\,\mathbf{u}\\
+Q(t) & = & Q_{o}+t\,\mathbf{v}\end{array}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+a segment between the two lines is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\mathbf{w}(s,t)=P(s)-Q(t)\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+the minimum distance segment 
+\begin_inset Formula $\mathbf{w}^{c}=\mathbf{w}(s_{c},t_{c})$
+\end_inset
+
+ is 
+\begin_inset Formula $\bot$
+\end_inset
+
+ to the lines:
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\begin{array}{ccc}
+\mathbf{w}^{c}\cdot\mathbf{u} & = & 0\\
+-\mathbf{w}^{c}\cdot\boldsymbol{v} & = & 0\end{array}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+i.e.
+ (indicating with 
+\begin_inset Formula $a=\mathbf{u}\cdot\mathbf{u}$
+\end_inset
+
+, 
+\begin_inset Formula $b=\mathbf{u}\cdot\mathbf{v}$
+\end_inset
+
+, 
+\begin_inset Formula $c=\mathbf{v}\cdot\mathbf{v}$
+\end_inset
+
+, 
+\begin_inset Formula $\mathbf{w}^{0}=\mathbf{w}(0,0)=P_{0}-Q_{0}$
+\end_inset
+
+, 
+\begin_inset Formula $d=\mathbf{u}\cdot\mathbf{w}^{0}$
+\end_inset
+
+, 
+\begin_inset Formula $e=\mathbf{v}\cdot\mathbf{w}^{0}$
+\end_inset
+
+ and 
+\begin_inset Formula $\Delta=ac-b^{2}$
+\end_inset
+
+)
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\begin{array}{ccc}
+d+s_{c}\, a-t_{c\,}b & = & 0\\
+-e-s_{c}\, b+t_{c\,}c & = & 0\end{array}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+that is
+\end_layout
+
+\begin_layout Standard
+\begin_inset Formula \[
+\begin{array}{ccc}
+s_{c} & = & (be-cd)/\Delta\\
+t_{c} & = & (ae-bd)/\Delta\end{array}\]
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Standard
+Note that 
+\begin_inset Formula $\Delta=\mathbf{u}^{2}\mathbf{v}^{2}-\left|\mathbf{u}\right|\left|\mathbf{v}\right|\cos^{2}\theta=(\left|\mathbf{u}\right|\left|\mathbf{v}\right|\sin\theta)^{2}\geq0$
+\end_inset
+
+ and 
+\begin_inset Formula $\Delta=0$
+\end_inset
+
+ only when 
+\begin_inset Formula $\mathbf{u}\parallel\mathbf{v}$
+\end_inset
+
+ .
+ In the 
+\begin_inset Formula $\Delta=0$
+\end_inset
+
+ case, we can use 
+\begin_inset Formula $s_{c}=0$
+\end_inset
+
+ so that 
+\begin_inset Formula $t_{c}=e/c$
+\end_inset
+
+.
+\end_layout
+
+\begin_layout Section
+Distance between segments
+\end_layout
+
+\begin_layout Standard
+We describe finite segments limiting 
+\begin_inset Formula $-1\leq s\leq1$
+\end_inset
+
+; this way 
+\begin_inset Formula $P(s)$
+\end_inset
+
+ describes a segment centered in 
+\begin_inset Formula $P_{0}$
+\end_inset
+
+, of direction 
+\begin_inset Formula $\mathbf{u}$
+\end_inset
+
+ and length 
+\begin_inset Formula $2\left|\mathbf{u}\right|$
+\end_inset
+
+.
+ 
+\end_layout
+
+\begin_layout Standard
+\begin_inset Float algorithm
+wide false
+sideways false
+status open
+
+\begin_layout Caption
+Distance between two segments.
+\end_layout
+
+\begin_layout LyX-Code
+Vector QP = P-Q;
+\end_layout
+
+\begin_layout LyX-Code
+double a = u*u; // always > 0
+\end_layout
+
+\begin_layout LyX-Code
+double b = u*v;
+\end_layout
+
+\begin_layout LyX-Code
+double c = v*v; // always > 0
+\end_layout
+
+\begin_layout LyX-Code
+double d = u*QP;
+\end_layout
+
+\begin_layout LyX-Code
+double e = v*QP;
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+double eps = 1.0e-6;
+\end_layout
+
+\begin_layout LyX-Code
+double D = a*c - b*b;     // always >= 0
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+if (D < eps) { // segment almost parallel
+\end_layout
+
+\begin_layout LyX-Code
+   // decide wich edge of P(s) is nearest
+\end_layout
+
+\begin_layout LyX-Code
+   if( d<0 ) sc = -1.0;  
+\end_layout
+
+\begin_layout LyX-Code
+   else sc = 1.0;
+\end_layout
+
+\begin_layout LyX-Code
+   // minimize distance to Q(t)
+\end_layout
+
+\begin_layout LyX-Code
+   tc = (e+sc*b)/c;
+\end_layout
+
+\begin_layout LyX-Code
+}
+\end_layout
+
+\begin_layout LyX-Code
+else{ // closest points on the lines
+\end_layout
+
+\begin_layout LyX-Code
+     sc = (b*e-c*d) / D;
+\end_layout
+
+\begin_layout LyX-Code
+     // check sc is on P(s) and
+\end_layout
+
+\begin_layout LyX-Code
+     // minimize distance
+\end_layout
+
+\begin_layout LyX-Code
+     if(sc<-1.0 ) 
+\end_layout
+
+\begin_layout LyX-Code
+       { sc = -1.0; tc = (e+sc*b)/c;} 
+\end_layout
+
+\begin_layout LyX-Code
+     else if( sc>1.0 ) 
+\end_layout
+
+\begin_layout LyX-Code
+       { sc = 1.0; tc = (e+sc*b)/c;}
+\end_layout
+
+\begin_layout LyX-Code
+     else tc = (a*e-b*d) / D;
+\end_layout
+
+\begin_layout LyX-Code
+    }
+\end_layout
+
+\begin_layout LyX-Code
+        
+\end_layout
+
+\begin_layout LyX-Code
+// check tc is on Q(t) and
+\end_layout
+
+\begin_layout LyX-Code
+// minimize distance 
+\end_layout
+
+\begin_layout LyX-Code
+if(tc<-1.0) { tc=-1.0; sc=(tc*b-d)/a;
+\end_layout
+
+\begin_layout LyX-Code
+else if(tc>1.0) { tc=1.0; sc=(tc*b-d)/a;}
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+// last check sc is on P(s)
+\end_layout
+
+\begin_layout LyX-Code
+if(sc<-1.0) sc=-1.0; else if(sc>1.0) sc=1.0; 
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\begin_layout LyX-Code
+
+\end_layout
+
+\end_inset
+
+
+\end_layout
+
+\begin_layout Subsection
+Distance between spherical caps
+\end_layout
+
+\begin_layout Standard
+xxx
+\end_layout
+
+\end_body
+\end_document
